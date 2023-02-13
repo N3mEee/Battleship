@@ -1,4 +1,3 @@
-const helloWorld = () => {
-    return "Hello World!";
-};
-export default helloWorld;
+import Gameboard from "./Gameboard";
+const board = new Gameboard(10);
+console.log(board);
