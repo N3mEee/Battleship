@@ -4,6 +4,7 @@ export default class Gameboard {
         this.size = size;
         this.board = this.createBoard(size);
         this.ships = [];
+        this.missedAttacks = [];
     }
 
     createBoard() {
@@ -39,6 +40,7 @@ export default class Gameboard {
             }
             return true;
         } else {
+            this.missedAttacks.push([row, col]);
             return false;
         }
     }
