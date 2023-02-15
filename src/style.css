@@ -1,0 +1,27 @@
+main {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.board-container {
+    display: flex;
+    gap: 100px;
+}
+
+.board {
+    display: grid;
+    width: max-content;
+    grid-template-columns: repeat(10, 1fr);
+}
+
+.cell {
+    height: 1.2rem;
+    width: 1.2rem;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

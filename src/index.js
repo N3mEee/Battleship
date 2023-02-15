@@ -1,33 +1,23 @@
 import Player from "./Player";
+import drawBoard from "./dom";
 
 const player1 = new Player("Player");
 const player2 = new Player("AI");
 
-player1.gameboard.addShip(10, [0, 0], [0, 9]);
-player1.gameboard.addShip(10, [5, 0], [5, 9]);
-player1.gameboard.addShip(2, [7, 5], [8, 5]);
+drawBoard(player1.gameboard.board, player2.gameboard.board);
 
-player2.gameboard.addShip(10, [0, 0], [0, 9]);
-
-player1.attackEnemy(player2, 0, 0);
-player1.attackEnemy(player2, 2, 0);
-player1.attackEnemy(player2, 2, 0);
-
-for (let i = 0; i < 200; i++) {
-    player2.attackEnemy(player1, 0, 0);
-}
-
-console.log(player1.gameboard);
-console.log(hasDuplicates(player1.gameboard.missedAttacks));
-
-console.log(player2.gameboard);
-console.log(hasDuplicates(player2.gameboard.missedAttacks));
-
-function hasDuplicates(arr) {
-    const newArr = [];
-    for (const element of arr) {
-        newArr.push(element.join(""));
+const boardContainer = document.querySelector(".board-container");
+boardContainer.addEventListener("click", (e) => {
+    if (e.target.classList.contains("cell")) {
+        if (!e.target.classList.contains("ship")) {
+            player1.gameboard.addShip(
+                4,
+                [+e.target.dataset.row, +e.target.dataset.col],
+                [+e.target.dataset.row, +e.target.dataset.col + 3]
+            );
+            drawBoard(player1.gameboard.board, player2.gameboard.board);
+        } else {
+            console.log(e.target.classList.contains("ship"));
+        }
     }
-    const noDups = new Set(newArr);
-    return arr.length !== noDups.size;
-}
+});
