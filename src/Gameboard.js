@@ -41,11 +41,16 @@ export default class Gameboard {
             return true;
         } else {
             this.missedAttacks.push([row, col]);
+            this.board[row][col] = 3;
             return false;
         }
     }
 
     allSunk() {
         return this.ships.every((ship) => ship.isSunk());
+    }
+
+    isPositionAvailable(row, col) {
+        return this.board[row][col] < 2;
     }
 }

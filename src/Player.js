@@ -15,13 +15,14 @@ export default class Player {
         }
     }
 
-    //FIX THIS
     #randomPositionGenerator(enemy) {
-        const randomRow = Math.floor(Math.random() * 10);
-        const randomCol = Math.floor(Math.random() * 10);
-        if (!enemy.gameboard.missedAttacks.includes([randomRow, randomCol])) {
-            return [randomRow, randomCol];
+        let randomRow = Math.floor(Math.random() * 10);
+        let randomCol = Math.floor(Math.random() * 10);
+
+        while (enemy.gameboard.isPositionAvailable(randomRow, randomCol) === false) {
+            randomRow = Math.floor(Math.random() * 10);
+            randomCol = Math.floor(Math.random() * 10);
         }
-        return this.#randomPositionGenerator(enemy);
+        return [randomRow, randomCol];
     }
 }
