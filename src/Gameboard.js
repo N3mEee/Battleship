@@ -39,9 +39,11 @@ export default class Gameboard {
                 }
             }
             return true;
-        } else {
+        } else if (this.board[row][col] === 0) {
             this.missedAttacks.push([row, col]);
             this.board[row][col] = 3;
+            return true;
+        } else {
             return false;
         }
     }
