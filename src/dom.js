@@ -1,8 +1,7 @@
 import "./style.css";
 
-export default function drawBoard(board1, board2) {
-    const main = document.querySelector("main");
-
+const main = document.querySelector("main");
+function drawBoard(board1, board2) {
     main.innerHTML = "";
 
     const boardContainer = document.createElement("div");
@@ -17,7 +16,6 @@ export default function drawBoard(board1, board2) {
         for (let j = 0; j < board1[i].length; j++) {
             const cell = document.createElement("div");
             cell.classList.add("cell");
-            cell.innerHTML = board1[i][j];
             cell.dataset.row = `${i}`;
             cell.dataset.col = `${j}`;
 
@@ -34,20 +32,18 @@ export default function drawBoard(board1, board2) {
 
     const boardPlayer2 = document.createElement("div");
     boardPlayer2.classList.add("board");
+    boardPlayer2.classList.add("ai-board");
     boardContainer.appendChild(boardPlayer2);
 
     for (let i = 0; i < board2.length; i++) {
         for (let j = 0; j < board2[i].length; j++) {
             const cell = document.createElement("div");
             cell.classList.add("cell");
-            cell.innerHTML = board2[i][j];
             cell.dataset.row = `${i}`;
             cell.dataset.col = `${j}`;
 
             boardPlayer2.appendChild(cell);
-            if (board2[i][j] === 1) {
-                cell.classList.add("ship");
-            } else if (board2[i][j] === 2) {
+            if (board2[i][j] === 2) {
                 cell.classList.add("damaged-ship");
             } else if (board2[i][j] === 3) {
                 cell.classList.add("missed-attack");
@@ -55,3 +51,12 @@ export default function drawBoard(board1, board2) {
         }
     }
 }
+function showWinner(winner) {
+    main.innerHTML = `<h1>${winner} wins!</h1>`;
+    const restartButton = document.createElement("button");
+    restartButton.classList.add("restart-button");
+    restartButton.innerHTML = "Restart";
+    main.appendChild(restartButton);
+}
+
+export { drawBoard, showWinner };

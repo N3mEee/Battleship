@@ -25,3 +25,15 @@ main {
     align-items: center;
     justify-content: center;
 }
+
+.ship {
+    background-color: aqua;
+}
+
+.damaged-ship {
+    background-color: red;
+}
+
+.missed-attack {
+    background-color: yellow;
+}
