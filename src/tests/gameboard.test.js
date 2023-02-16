@@ -60,6 +60,13 @@ test("gameBoard recive atack", () => {
 test("gameBoard recive atack2", () => {
     const board = new Gameboard(10);
     board.addShip(5, [0, 0], [0, 4]);
+    expect(board.receiveAttack(2, 0)).toBe(true);
+});
+
+test("gameBoard recive atack3", () => {
+    const board = new Gameboard(10);
+    board.addShip(5, [0, 0], [0, 4]);
+    board.receiveAttack(2, 0);
     expect(board.receiveAttack(2, 0)).toBe(false);
 });
 
