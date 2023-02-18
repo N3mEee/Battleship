@@ -4,6 +4,7 @@ main {
     height: 100vh;
     justify-content: center;
     align-items: center;
+    background-color: #e6e6e6;
 }
 
 .board-container {
@@ -13,17 +14,19 @@ main {
 
 .board {
     display: grid;
-    width: max-content;
-    grid-template-columns: repeat(10, 1fr);
+    grid-template-columns: repeat(10, 2rem);
+    grid-template-rows: repeat(10, 2rem);
+    background-color: #d9d9d9;
+    border: 2px solid #bfbfbf;
 }
 
 .cell {
-    height: 1.2rem;
-    width: 1.2rem;
-    border: 1px solid black;
+    border: 1px solid #bfbfbf;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 0.8rem;
+    font-weight: bold;
 }
 
 .ship {
@@ -36,4 +39,27 @@ main {
 
 .missed-attack {
     background-color: yellow;
+}
+
+.restart-button {
+    margin-top: 50px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #d9d9d9;
+    color: #333;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.start-game-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #d9d9d9;
+    color: #333;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
 }
