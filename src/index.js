@@ -1,43 +1,63 @@
 import Player from "./Player";
-import { drawBoard, showWinner } from "./dom";
+import { drawBoard, showWinner, lobby } from "./dom";
+
+initLobby();
+
+function initLobby() {
+    lobby();
+    document.querySelector(".start-game-button").addEventListener("click", startGame);
+}
 
 function startGame() {
     const player1 = new Player("Player");
     const player2 = new Player("AI");
-    const main = document.querySelector("main");
 
-    player1.gameboard.addShip(5, [0, 0], [0, 0 + 4]);
-    player1.gameboard.addShip(4, [5, 2], [5, 2 + 3]);
-    player1.gameboard.addShip(3, [7, 5], [7 + 2, 5]);
-
-    player2.gameboard.addShip(5, [1, 0], [1, 0 + 4]);
-    player2.gameboard.addShip(4, [4, 2], [4, 2 + 3]);
-    player2.gameboard.addShip(3, [5, 2], [5, 2 + 2]);
+    addShip(player1, 5);
+    addShip(player2, 5);
 
     drawBoard(player1.gameboard.board, player2.gameboard.board);
 
-    main.addEventListener("click", (e) => {
-        if (e.target.parentNode.classList.contains("ai-board")) {
-            if (player1.turn === true) {
-                player1.attackEnemy(player2, e.target.dataset.row, e.target.dataset.col);
-                drawBoard(player1.gameboard.board, player2.gameboard.board);
-                checkWinner();
-                player2.attackEnemy(player1, 0, 0);
-                drawBoard(player1.gameboard.board, player2.gameboard.board);
-                checkWinner();
-            }
-        } else if (e.target.classList.contains("restart-button")) {
-            startGame();
-        }
-    });
-
-    const checkWinner = () => {
-        if (player1.gameboard.allSunk() === true) {
-            showWinner("Player1");
-        } else if (player2.gameboard.allSunk() === true) {
-            showWinner("Player2");
-        }
-    };
+    addEnemyBoardEvent(player1, player2);
 }
 
-startGame();
+function addShip(player, size) {
+    const [shipRow, shipCol] = prompt(`Ship size: ${size}`).split("");
+    player.gameboard.addShip(size, [Number(shipRow), Number(shipCol)], [Number(shipRow), Number(shipCol) + size - 1]);
+}
+
+function addEnemyBoardEvent(player1, player2) {
+    const enemyBoard = document.querySelector(".ai-board");
+    enemyBoard.addEventListener("click", (e) => {
+        handleAiBoardClick(e, player1, player2);
+    });
+}
+
+function handleAiBoardClick(e, player1, player2) {
+    if (player1.turn === true) {
+        const { row, col } = e.target.dataset;
+        player1.attackEnemy(player2, row, col);
+        drawBoard(player1.gameboard.board, player2.gameboard.board);
+        checkWinner(player1, player2);
+        player2.attackEnemy(player1, 0, 0);
+        drawBoard(player1.gameboard.board, player2.gameboard.board);
+        checkWinner(player1, player2);
+    }
+}
+
+function checkWinner(player1, player2) {
+    if (player1.gameboard.allSunk() === true) {
+        showWinner("Player2");
+        addRestartEvent();
+    } else if (player2.gameboard.allSunk() === true) {
+        showWinner("Player1");
+        addRestartEvent();
+    } else {
+        addEnemyBoardEvent(player1, player2);
+    }
+}
+
+function addRestartEvent() {
+    document.querySelector(".restart-button").addEventListener("click", () => {
+        initLobby();
+    });
+}

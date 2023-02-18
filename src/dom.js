@@ -59,4 +59,11 @@ function showWinner(winner) {
     main.appendChild(restartButton);
 }
 
-export { drawBoard, showWinner };
+function lobby() {
+    main.innerHTML = "";
+    const startGameButton = document.createElement("button");
+    startGameButton.textContent = "Start Game";
+    startGameButton.classList.add("start-game-button");
+    main.appendChild(startGameButton);
+}
+export { drawBoard, showWinner, lobby };
